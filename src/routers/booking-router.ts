@@ -1,14 +1,13 @@
 import { Router } from "express";
 import { postBooking, listBooking, updateBooking } from "@/controllers";
-import { authenticateToken, validateBody } from "@/middlewares";
-import { roomSchema } from "@/schemas/room-schemas";
+import { authenticateToken } from "@/middlewares";
 
 const bookingRouter = Router();
 
 bookingRouter
   .all("/*", authenticateToken)
-  .post("", validateBody(roomSchema), postBooking)
-  .put("/:bookingId", validateBody(roomSchema), updateBooking)
+  .post("", postBooking)
+  .put("/:bookingId", updateBooking)
   .get("", listBooking);
 
 export { bookingRouter };

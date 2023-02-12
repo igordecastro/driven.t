@@ -30,9 +30,10 @@ export async function listBooking(req: AuthenticatedRequest, res: Response) {
 
 export async function updateBooking(req: AuthenticatedRequest, res: Response) {
   const { bookingId } = req.params;
+  const { userId } = req;
 
   try{
-    await bookingService.updateBooking(Number(bookingId));
+    await bookingService.updateBooking(Number(bookingId), Number(userId));
   } catch (err) {
     return res.sendStatus(httpStatus.FORBIDDEN);
   }
