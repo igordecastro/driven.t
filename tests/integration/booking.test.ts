@@ -46,7 +46,7 @@ describe("GET /booking", () => {
     it("should respond with status 404 if user doesn't have a reservation", async () => {
       const token = await generateValidToken();
       const response = await server.get("/booking").set("Authorization", `Bearer ${token}`);
-  
+
       expect(response.status).toBe(httpStatus.NOT_FOUND);
     });
   });
@@ -79,21 +79,21 @@ describe("POST /booking", () => {
   });
 
   describe("When token is valid", () => {
-    it("should", async () => {
-      const response = await server.post("/booking");
-    });
+    it("should create a new booking in the database", async () => {
+      const user = await createUser();
+      const token = await generateValidToken(user);
 
-    it("should", async () => {
-      const token = generateValidToken();
-      const response = await server.post("/booking").set("Autorization", `Bearer ${token}`).send({
+      const response = await server.post("/booking").set("Authorization", `Bearer ${token}`).send({
         roomId: 1,
       });
+      console.log(response.body);
+      expect(response.status).toBe(httpStatus.CREATED);
     });
   });
 });
 
 describe("PUT /booking/:bookingId", () => {
-  describe("When token is invalid", () => {
+  describe("When token is invalid", ( ) => {
     it("should respond with status 401 if no token is given", async () => {
       const response = await server.put("/booking");
 
@@ -115,14 +115,6 @@ describe("PUT /booking/:bookingId", () => {
       const response = await server.put("/booking").set("Authorization", `Bearer ${token}`);
 
       expect(response.status).toBe(httpStatus.UNAUTHORIZED);
-    });
-  });
-  describe("When token is valid", () => {
-    it("should", async () => {
-      const response = await server.put("/booking");
-    });
-    it("should", async () => {
-      const response = await server.put("/booking");
     });
   });
 });

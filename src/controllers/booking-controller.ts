@@ -20,8 +20,9 @@ export async function postBooking(req: AuthenticatedRequest, res: Response) {
 }
 
 export async function listBooking(req: AuthenticatedRequest, res: Response) {
+  const { userId } = req;
   try {
-    const bookings = await bookingService.listBooking();
+    const bookings = await bookingService.listBooking(userId);
     return res.send(bookings);
   } catch(err) {
     return res.sendStatus(httpStatus.NOT_FOUND);
